@@ -21,7 +21,7 @@ namespace MSExcel_CRUD
         }
 
         //Remove specific characters form given string
-        public string RmSystemCharechter(string STR)
+        public string RmSystemCharechters(string STR)
         {
             return STR.Replace("|", "").Replace(">", "").Replace("<", "").Replace("\"", "").Replace("?", "").Replace(":", "").Replace(",", "").Replace("/", "").Replace("\\", "");
         }

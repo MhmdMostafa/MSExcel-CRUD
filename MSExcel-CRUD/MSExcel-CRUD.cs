@@ -18,6 +18,14 @@ namespace MSExcel_CRUD
         public static Workbook XlWorkBook = null;
         public static Worksheet XlWorkSheet = null;
 
+        public MSExcel_CRUD (string FilePath)
+        {
+            XlWorkBook = XlApp.Workbooks.Open(@FilePath);
+            XlWorkSheet = (Excel.Worksheet)XlWorkBook.Worksheets.get_Item(1);
+            GetWindowThreadProcessId(XlApp.Hwnd, out XlAppProcessID); 
+        }
+
+
         public static void Create(int row, params string[] args)
         {
             for (int index = 0; index < args.Length; index++)
@@ -45,11 +53,7 @@ namespace MSExcel_CRUD
         }
 
 
-        public Process GetExcelProcess()
-        {
-            GetWindowThreadProcessId(XlApp.Hwnd, out XlAppProcessID); ;
-            return Process.GetProcessById(XlAppProcessID);
-        }
+        
 
     }
 }
