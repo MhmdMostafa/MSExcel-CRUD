@@ -17,9 +17,16 @@ namespace MSExcel_CRUD
 
         public MSEx_CRUD(string FilePath)
         {
-            XlWorkBook = XlApp.Workbooks.Open(@FilePath);
-            XlWorkSheet = (Excel.Worksheet)XlWorkBook.Worksheets.get_Item(1);
-            GetWindowThreadProcessId(XlApp.Hwnd, out XlAppProcessID);
+            try
+            {
+                XlWorkBook = XlApp.Workbooks.Open(@FilePath);
+                XlWorkSheet = (Excel.Worksheet)XlWorkBook.Worksheets.get_Item(1);
+                GetWindowThreadProcessId(XlApp.Hwnd, out XlAppProcessID);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("File not Found " + e );
+            }
         }
 
 
@@ -61,9 +68,6 @@ namespace MSExcel_CRUD
                 {
                     Console.WriteLine($"You have closed the Excel File Please open your project again and do not close it again please\nErorr: {error}");
                     XlApp.Quit();
-                    //_ = System.Runtime.InteropServices.Marshal.ReleaseComObject(XlWorkBook);
-                    //_ = System.Runtime.InteropServices.Marshal.ReleaseComObject(XlWorkSheet);
-                    //_ = System.Runtime.InteropServices.Marshal.ReleaseComObject(XlApp);
                     Process.GetProcessById(XlAppProcessID).Kill();
                     XlApp = null;
                 }
@@ -78,10 +82,7 @@ namespace MSExcel_CRUD
                 {
                     XlApp.ActiveWorkbook.Close(0);
                     XlApp.Quit();
-                    //_ = System.Runtime.InteropServices.Marshal.ReleaseComObject(XlWorkBook);
-                    //_ = System.Runtime.InteropServices.Marshal.ReleaseComObject(XlWorkSheet);
                     Process.GetProcessById(XlAppProcessID).Kill();
-                    //_ = System.Runtime.InteropServices.Marshal.ReleaseComObject(XlApp);
                     XlApp = null;
 
                 }
@@ -89,10 +90,7 @@ namespace MSExcel_CRUD
                 {
 
                     XlApp.Quit();
-                    //_ = System.Runtime.InteropServices.Marshal.ReleaseComObject(XlWorkBook);
-                    //_ = System.Runtime.InteropServices.Marshal.ReleaseComObject(XlWorkSheet);
                     Process.GetProcessById(XlAppProcessID).Kill();
-                    //_ = System.Runtime.InteropServices.Marshal.ReleaseComObject(XlApp);
                     XlApp = null;
 
                     Console.WriteLine($"You have closed the Excel File Please open your project again and do not close it again please\nErorr: {error}");
